@@ -78,16 +78,15 @@ class DQN_PSO_Agent:
         update_input = torch.from_numpy(update_input).float()
         for i in range(self.state_size):
             target[i] = torch.from_numpy(target[i]).float()
-        for j in range(20):
-            for i  in range(self.num_agents):
-                if(self.E[i]>400):
-                    continue
-                scores = self.agents[i].model(update_input)
-                loss = self.agents[i].criterion(scores, target[i])
+        for i  in range(self.num_agents):
+            if(self.E[i]>400):
+                continue
+            scores = self.agents[i].model(update_input)
+            loss = self.agents[i].criterion(scores, target[i])
 
-                self.agents[i].optimizer.zero_grad()
-                loss.backward()
-                self.agents[i].optimizer.step()
+            self.agents[i].optimizer.zero_grad()
+            loss.backward()
+            self.agents[i].optimizer.step()
 
 if __name__ == "__main__":
 
